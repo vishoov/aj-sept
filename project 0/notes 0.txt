@@ -1,0 +1,31 @@
+1. setting up a node js project
+
+1. terminal > npm init -y
+2. create the main file (endpoint)
+
+
+
+npm -> node package manager 
+init -> initialise 
+
+
+folder -> project -> npm initialise -> package.json
+
+
+package.json -> we have the specification of the project 
+
+
+npm run dev 
+npm run this script -> 'dev'
+npm run start -> 'start'
+
+
+Express.JS
+
+
+1. terminal > npm install express
+
+
+
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status

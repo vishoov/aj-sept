@@ -1,0 +1,22 @@
+{
+  "name": "project-0",
+  "version": "1.0.0",
+  "description": "this is the pilot project for our node js journey",
+  "main": "blog.js",
+  "scripts": {
+    "start":"node blog.js",
+    "dev":"nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "backend"
+  ],
+  "author": "Vishoo Verma",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
