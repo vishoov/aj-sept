@@ -86,7 +86,15 @@ app.put('/blogs/:id', (req, res)=>{
 
 
 //Delete a blog post by id
+app.delete("/blogs/:id", (req, res)=>{
+    const id = parseInt(req.params.id);
 
+    const blogIndex= blogs.findIndex(blog => blog.id === id);
+
+    blogs.splice(blogIndex, 1);
+
+    res.json({ message: "Blog deleted successfully" });
+})
 
 
 
