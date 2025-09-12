@@ -25,7 +25,37 @@ Express.JS
 
 1. terminal > npm install express
 
-
+RESTful APIs ( Representational State Transfer ) 
+-> independant of other routes 
+-> stateless 
+-> end to end 
 
 
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
+
+
+
+Middlewares
+
+
+any function that gets executed in between the request-response cycle
+
+request -> middleware1 -> middleware2 -> middleware3 -> callback-> response 
+
+Types of Middlewares
+
+Application Level 
+Built-in 
+Custom Middlewares -> Logging 
+Route specific middleware 
+Router-Level Middleware 
+
+MVC Architecture 
+
+MVC stands for Model-View-Controller that is a foundational design pattern in backend development that enables MODULAR, MAINTABLE, and SCALABLE backend implementation practice that helps us in making our application highly valuable 
+
+It does this by dividing the whole application into 3 major components 
+
+Model
+View -> All the routes will be placed here 
+Controller

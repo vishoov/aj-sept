@@ -1,7 +1,7 @@
 const express = require('express');
 //this imports the express module
 
-//we setup the express app 
+//we setup the express app (express instance)
 const app = express();
 
 //this app is going to be the actual SERVER that will listen to every request
