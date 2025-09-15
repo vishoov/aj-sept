@@ -58,4 +58,4 @@ It does this by dividing the whole application into 3 major components
 
 Model
 View -> All the routes will be placed here 
-Controller
+Controller -> Handler Functions or Callback Functions 

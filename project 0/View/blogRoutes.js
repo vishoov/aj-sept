@@ -2,9 +2,9 @@
 const express= require('express');
 const router = express.Router();
 //app.method(route, callback function)
-
+const { rootHandler, create } = require('../Controllers/blogController')
 //router instance -> we can use all the methods that we use with the express app instance
-
+const { logging } = require('../Middlewares/blogMW');
 const blogs = [
     {
         id:1,
@@ -29,40 +29,15 @@ const middlewareFunction = (req, res, next)=>{
 router.use(middlewareFunction);
 
 
-const logging = (req, res, next)=>{
-    const method = req.method;
-    const path = req.path;
-    const time = new Date().toISOString();
-    const ip = req.ip;
 
-    console.log(`[${time}] : ${method} = '${path}' - ${ip}`);
-    next();
-}
 
 router.use(logging)
 
-router.get("/", (req, res)=>{
-    console.log("Root route accessed");
-    res.send("Welcome to the blog management api")
-})
+router.get("/", rootHandler)
 
 
 //create a new blog post
-router.post('/create-blog', (req, res)=>{
-
-    const { title, content, author } = req.body;
-
-    const newBlog = {
-        id: blogs.length+1,
-        title:title,
-        content:content,
-        author:author
-    }
-
-    blogs.push(newBlog);
-
-    res.status(201).json({ message: "Blog created successfully", blog: newBlog });
-})
+router.post('/create-blog', create)
 
 
 
