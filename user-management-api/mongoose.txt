@@ -1,0 +1,34 @@
+
+Database 
+
+creating a cluster
+a database inside the cluster
+
+network security
+user info
+
+
+npm i mongoose 
+
+MONGOOSE -> is an ODM object data modelling package, this will be helping us in doing
+all database focused tasks 
+
+connecting to database
+creating a schema
+routes CRUD 
+
+
+URI -> Uniform resource identifier -> specific information coded 
+
+
+- setup and connect database 
+- build a model or a schema 
+- writing CRUD queries 
+
+
+Schema is optional but is necessary 
+Schema is required for:
+1. Data integrity and validation -> uniform 
+2. structure definition -> allow 
+3. business logic 
+4. Faster Searching 
