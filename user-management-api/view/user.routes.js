@@ -284,7 +284,86 @@ router.delete('/delete/:id', async (req, res)=>{
     }
 })
 
+//Aggregation Pipelines -> a set of stages that process data and return computed results
+//normal find queries return documents in their original form 
+//aggregation pipelines can transform the documents and return computed results
+
+// DB data -> stage1 -> stage2 -> stage3 -> final result
+
+//stages -> $match, $group, $sort, $project, $limit, $skip, $count, $unwind
+
+//get number of users in each city 
+router.get("/citywise", async (req, res)=>{
+    try{
+        //first i will have to group the data by city 
+        //then count the number of users in each city
+
+        const result = await User.aggregate(
+            [
+                {
+                    $group:{
+                        _id:"$address.city", //group by city
+                        count: {
+                            $sum:1 //count number of users in each city
+                        }
+
+                    }
+                },
+                {
+                    $project:{
+                        city:"$_id",
+                        count:1,
+                        _id:0 //do not show the _id field
+                    }
+                }
+
+            ]
+        )
+
+        return res.status(200).json({result, message:"Aggregation successful", status:"Success"})
+    }
+    catch(err){
+        return res.status(500).json({message: err.message, status:"Failed"})
+    }
+})
+
+//agewise distribution of users
+router.get("/agewise", async (req, res)=>{
+    try{
+        const result = await User.aggregate(
+            [
+                {
+                    $group:{
+                        _id:"$age",
+                        count:{$sum:1}
+                    }
+                },
+                {
+                    $project:{
+                        age:"$_id",
+                        count:1,
+                        _id:0
+                    }
+                },
+                {
+                    $sort:{
+                        age:-1 
+                    }
+                }
+            ]
+        )
+        return res.status(200).json({
+            result
+        })
+    }
+    catch(err){
+        return res.status(500).json({message: err.message, status:"Failed"})
+    }
+})
+
 module.exports = router;
 
 //Principle of least privilege
 //least privilege -> only the minimum required privileges should be given to a user to perform a task
+
+
