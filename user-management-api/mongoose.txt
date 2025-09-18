@@ -32,3 +32,10 @@ Schema is required for:
 2. structure definition -> allow 
 3. business logic 
 4. Faster Searching 
+5. Better insights 
+
+
+Youtube - videos -> people -> <20, >20 <40, >40 <80
+
+
+Ecommerce OWner -> AC and heaters 
