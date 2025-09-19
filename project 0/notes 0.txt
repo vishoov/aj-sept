@@ -56,6 +56,12 @@ MVC stands for Model-View-Controller that is a foundational design pattern in ba
 
 It does this by dividing the whole application into 3 major components 
 
-Model
+Model -> Validating the data 
 View -> All the routes will be placed here 
 Controller -> Handler Functions or Callback Functions 
+
+
+
+server -> signup -> name, email, phone number 
+
+user -> name, email, address 

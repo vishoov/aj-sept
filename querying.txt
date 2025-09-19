@@ -1,0 +1,152 @@
+MONGOOSE COMMANDS CRUDS
+
+Create 
+
+1. Model.create(data) 
+2. new Model(data); await user.save();
+
+
+
+Read
+
+1. find({query}) -> array return
+2. findOne({query}) -> single object return 
+
+
+query = {
+    name:"akash",
+    age:20
+}
+
+
+
+1. matching query 
+
+    User.find(
+        {
+            name:"Acciojob",
+            age:20,
+            address:"123, new york"
+        }
+    )
+
+2. Multiple Conditions Query 
+
+LOGICAL Operators 
+
+AND -> all conditions MUST be true
+OR -> atleast ONE condition should be true
+NOT -> this condition should NOT be true
+NOR -> multiple condition any of them can be false 
+
+3. Comparison Operator 
+
+
+condition   syntax
+>=          $gte
+<=          $lte
+>           $gt
+<           $lt
+!=          $ne
+
+
+4. [12, 18, 20, 30] -> find people of these age only 
+
+
+$in  -> exists in array 
+$nin -> not in array 
+
+
+
+Update
+
+1. User.updateOne(
+    {
+        //query to find the user 
+    },
+    {
+        $set :{
+            //key value 
+        }
+    }
+)
+
+
+2. User.updateMany(
+    {
+        //query to find the user 
+    },
+    {
+        $set :{
+            //key value 
+        }
+    }
+)
+
+
+3. FindOneAndUpdate -> mongoose specific -> options
+
+User.findOneAndUpdate(
+    {
+        //finding the data
+    },
+    {
+        $set:{
+            new value
+        }
+    },
+    {
+        //options
+        new:true, //returns the updated document 
+        upsert:true, //optionally create a new document if the query does not fit on any document 
+        runValidators:true, //update -> again it will validate the data 
+    }
+)
+
+4. User.findByIdAndUpdate(
+    {
+        //finding the data
+    },
+    {
+        $set:{
+            new value
+        }
+    },
+    {
+        //options
+        new:true, //returns the updated document 
+        upsert:true, //optionally create a new document if the query does not fit on any document 
+        runValidators:true, //update -> again it will validate the data 
+    }
+)
+
+Delete
+
+1. deleteOne(
+    {
+        matching query
+    }
+)
+
+2. deleteMany(
+    {
+        matching query 
+    }
+)
+
+3. User.findOneAndDelete
+
+4. User.findByIdAndDelete
+
+Aggregation Pipelines https://www.mongodb.com/docs/manual/core/aggregation-pipeline/ 
+
+
+
+find the people that are from city who are adults (minimum age) 
+
+
+admins with age > 20 (optional phone number exists)
+
+role -> admins
+age gt 20
+phone number -> exists 
