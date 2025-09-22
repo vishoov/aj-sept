@@ -150,3 +150,18 @@ admins with age > 20 (optional phone number exists)
 role -> admins
 age gt 20
 phone number -> exists 
+
+
+Aggregation Pipelines that are stages of processing and analysis of the data to get insights or patterns
+
+
+Stages -> 
+
+1. $match -> find()
+2. $group -> groups the documents by a specified identifier 
+3. $project -> reshapes the documents by including, excluding, adding new fields 
+4. $sort -> we can sort the data based on a specified field -> number -> ascending (1) or descending (-1)
+5. $limit -> restricts the number of documents at a particular stge of piepeline
+6. $count -> return the count of documents at a particular stage of pipeline
+
+

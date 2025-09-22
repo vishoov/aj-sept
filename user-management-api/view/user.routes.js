@@ -361,6 +361,122 @@ router.get("/agewise", async (req, res)=>{
     }
 })
 
+router.get("/match", async (req, res)=>{
+    try{
+        const query = req.query.q;
+
+        const results = await User.aggregate([
+            {
+                $match:{
+                    age:{
+                        $gt:parseInt(query)
+                    }
+                }
+            }
+        ])
+    
+    res.json({
+        data:results
+    })
+    }
+
+
+    catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
+//people from different cities that are there in my database
+
+//add a condition in this 
+//age>18 (adults)
+router.get("/citygroup", async (req, res)=>{
+    try{
+        const result = await User.aggregate([
+            {
+                $match:{
+                    age:{
+                        $gt:18
+                    }
+                }
+            },
+            {
+                $group:{
+                    _id:"$address.city",
+                    count:{
+                        $sum:1
+                    }
+
+                }
+            },
+            {
+                $project:{
+                    "_id":0,
+                    city:"$_id",
+                    count:1
+
+                }
+            }
+        ])
+
+        return res.status(200).json({result})
+    }
+    catch(err){
+        return res.status(500).json({message: err.message, status:"Failed"})
+    }
+})
+
+
+router.get("/sort", async (req, res)=>{
+    try{
+        const result = await User.aggregate([
+            {
+                $limit:10
+            },
+            {
+                $sort:{
+                    age:1 //1-> ascending, -1-> descending
+                }
+            }
+        ])
+        
+        return res.status(200).json({result})
+
+    }
+    catch(err){
+        return res.status(500).json({message: err.message, status:"Failed"})
+    }
+})
+
+//pagination 
+
+//page -> 1, 2, 3, 4
+//limit -> in one page how many records you want to show -> i want to see 10 records in one page
+//skip -> (page-1)*limit -> number of records to skip
+router.get("/pagination", async (req, res)=>{
+    try{
+        const page= parseInt(req.query.page) || 1;
+        const limit= 2;
+//for page 2 -> we will have to skip -> (2-1)*10 -> 10 records
+//for page 3 -> we will have to skip -> (3-1)*10 -> 20 records
+//for page 4 -> we will have to skip -> (4-1)*10 -> 30 records
+        const result = await User.aggregate([
+           
+            {
+                $skip:(page-1)*limit
+            },{
+                $limit:limit
+            }
+        ])
+
+        return res.status(200).json({page, result})
+    }
+    catch(err){
+        return res.status(500).json({message: err.message, status:"Failed"})
+    }
+})
+
+
 module.exports = router;
 
 //Principle of least privilege

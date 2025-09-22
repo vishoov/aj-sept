@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+
+    <h1>Upload a Profile Picture</h1>
+    
+    <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="profile">Choose a file:</label>
+            <input type="file" id="profile" name="profile" required>
+        </div>
+        <div>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+
+    <h2>Multiple Photos</h2>
+    <form action="http://localhost:3000/upload-multiple" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="photos">Choose files:</label>
+            <input type="file" id="photos" name="photos" multiple required>
+        </div>
+        <div>
+            <button type="submit">Upload Photos</button>
+        </div>
+
+</body>
+</html>
