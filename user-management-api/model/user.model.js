@@ -12,6 +12,9 @@
 const mongoose = require('mongoose');
 //a schema is a structure or blueprint of the data
 
+const bcrypt = require('bcrypt');
+
+
 const userSchema = new mongoose.Schema({
 //username
 username:{
@@ -109,6 +112,35 @@ address:{
 
 });
 
+// target.addEventListener('event', handlerFunction)
+userSchema.pre('save', async function(next){
+    //signup -> password -> encrypted-> database
+    //encrypt the password before saving to database
+    //hashing -> one way encryption
+
+    //condition to check if password is modified
+    if(this.isModified('password')){
+        //encrypt the password
+        // const salt = await bcrypt.genSalt(10); //generate salt
+        const salt = "$2b$10$CwTycUXWue0Thq9StjUM0u"; //fixed salt
+        const hashedPassword = await bcrypt.hash(this.password, salt);
+        //fdigd9t94yt9hdoh9yh09y40hgod09y40hdph04yono0g0b
+        this.password = hashedPassword;
+        //user data -> update the password -> save
+        return next();
+    }else{
+        return next();
+    }
+})
+
+//the server now shows error because the password is hashed and it does not resemble the original password
+//login -> user enters password -> we have to compare the user entered password with the hashrd password in the database
+
+userSchema.methods.checkPassword = async function (password){
+    //password -> user entered password
+    //this.password -> hashed password in the database
+    return await bcrypt.compare(password, this.password);
+}
 //model
 const User = mongoose.model('User_Collection', userSchema);
 
