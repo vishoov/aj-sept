@@ -2,14 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../model/user.model');
-
-
+const xss = require('xss');
+const { createToken, verifyToken } = require('../auth/api.auth');
 //create User
 //Create Operation -> whatever info we send, a document should be CREATED in the databse
 
 router.post('/signup', async (req, res)=>{
     try{
         const userinfo = req.body;
+
+        //sanitize the input to prevent XSS attacks
+        userinfo.name = xss(userinfo.name);
+        userinfo.email = xss(userinfo.email);
+        userinfo.password = xss(userinfo.password);
+        userinfo.role = xss(userinfo.role);
+        userinfo.age = xss(userinfo.age);
+        if(userinfo.address){
+            userinfo.address.city = xss(userinfo.address.city);
+            userinfo.address.state = xss(userinfo.address.state);
+            userinfo.address.country = xss(userinfo.address.country);
+        }
 
         // const user = await User.create(userinfo);
         //success response 
@@ -34,6 +46,20 @@ router.post('/signup', async (req, res)=>{
     }
 })
 
+router.get("/json", async (req, res)=>{
+    try{
+
+        const body = req.body;
+        const header = req.headers;
+
+        return res.status(200).json({body, header});
+
+    }
+    catch(err){
+        return res.status(500).json({message: err.message, status:"Failed"})
+    }
+})
+
 router.post('/login', async (req, res)=>{
     try{
         const { email, password } = req.body;
@@ -46,7 +72,9 @@ router.post('/login', async (req, res)=>{
             return res.status(400).json({message:"Invalid credentials", status:"Failed"})
         }
 
-        return res.status(200).json({user, message:"Login successful", status:"Success"});
+        const token = createToken(user);
+
+        return res.status(200).json({user, message:"Login successful", token, status:"Success"});
     }   
     catch(err){
         return res.status(500).json({message: err.message, status:"Failed"})
@@ -54,7 +82,7 @@ router.post('/login', async (req, res)=>{
 })
 
 //Read -> find() -> query that fetches some data from the database
-router.get("/users", async (req, res)=>{
+router.get("/users", verifyToken, async (req, res)=>{
     try{
 
         const users = await User.find();
@@ -82,6 +110,12 @@ router.post("/multiple-users", async (req, res)=>{
 router.get("/userbyname", async (req, res)=>{
     try{
         const name = req.query.name; //name is the key in the query parameter
+
+        if(name.typeof !== 'string'){
+            return res.status(400).json({message: "Invalid name parameter"})
+        }
+
+
 
         const users = await User.find(
             {

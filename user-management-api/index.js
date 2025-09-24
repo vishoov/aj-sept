@@ -3,13 +3,37 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require('./view/user.routes');
 const multer = require('multer');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+
+
+//Apply Rate Limiting to all requests
+
+const limiter = rateLimit({
+    windowMs: 15*60*1000, //15 minutes
+    max:100, //limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP, please try again after 15 minutes"
+})
+
+app.use(limiter);
+
+const corsOptions = {
+    origin:'http://localhost:5500', //frontend url
+    // optionsSuccessStatus:200 //some legacy browsers (IE11, various SmartTVs) choke on 204
+    methods:"GET, POST, PUT, DELETE",
+    allowedHeaders:"Content-Type, Authorization" //which headers are allowed 
+}
+
+app.use(cors(corsOptions));
+
 
 
 //define the storage for multer
 // const upload = multer({
 //     dest:"uploads/",
-
 // })
+
+
 
 const storage = multer.diskStorage({
     destination:function(req, file, cb){
@@ -59,10 +83,12 @@ app.post("/upload-multiple", upload.array('photos', 5), async (req, res)=>{
 
 app.use(express.json());
 
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 
-const URI = 'mongodb+srv://vverma971_db_user:InBaq7jfrae67ndi@cluster0.m7rucnx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const URI = process.env.MONGO;
 
 //connecting to the database 
 //mongoose promise to connect to the database
@@ -74,6 +100,27 @@ mongoose.connect(URI)
 .catch((err)=>{
     console.log("error connecting to the database", err);
 })
+
+
+const logging = (req, res, next)=>{
+    try{
+        const method = req.method;
+        const url = req.url;
+        const time = new Date().toISOString();
+
+        console.log(`[${time}] ${method} ${url}, ${res.body}`);
+
+        //we can also log this to a file or database for future reference
+
+        next(); //proceed to the next middleware or route handler
+    }
+    catch(err){
+        console.log("error in logging middleware", err);
+        next(); //proceed to the next middleware or route handler
+    }
+}
+
+app.use(logging); //apply logging middleware to all routes
 
 
 app.get("/", (req, res)=>{
