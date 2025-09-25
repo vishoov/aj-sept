@@ -1,0 +1,21 @@
+1.  Find the most frequently occurring city in a customer collection.
+
+User.aggregate([
+  { $group: {
+      _id: "$city",
+      count: { $sum: 1 }
+  }},
+  { $sort: { count: -1 } },
+  { $limit: 1 }
+])
+
+2. Calculate total sales for each product category with conditions.
+Calculate total sales for products with price over $50 and quantity greater than 10:
+
+db.products.aggregate([
+  { $match: { price: { $gt: 50 }, quantity: { $gt: 10 } } },
+  { $group: {
+      _id: "$productCategory",
+      totalSales: { $sum: { $multiply: ["$price", "$quantity"] } }
+  }}
+])

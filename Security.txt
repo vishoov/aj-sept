@@ -1,0 +1,84 @@
+Security Best Practices for a deployable and reliable production ready API
+
+possible ways our security might be at risk
+
+
+
+Plain password -> anybody can steal or read the passwords
+
+1. password encryption
+
+Model -> event (save) -> pre -> password encryption
+
+package -> bcrypt
+
+
+2. API Security -> JWT -> Json web token 
+ -> this is a lightweight and self contained API security measure that is used to protect routes from unknown users
+
+ lightweight -> string
+ self contained -> client -> decode -> authenticate 
+
+ createToken, verifyToken
+
+
+stateless-> the token is not stored on the server side
+tamper-proof -> signature -> makes it recognizable if the token has changed 
+expiration -> expiration duration -> after this duration token will become invalid
+identification -> specify that whose token is this email 
+
+package : npm i jsonwebtoken
+
+
+3. .env environment variables -> variable that will be only usable in that environment
+
+
+package: npm i dotenv
+
+
+
+4. Server Security -> amazon backend = amazon front end 
+
+amazon backend -> flipkart front end 
+
+serverselectionerror -> your current ip address is not whitelisted 
+
+CORS-> cross origin resource sharing
+
+package:  npm i cors
+
+
+
+----------HACKERSSSS--------------------
+
+
+
+
+1. SQL or NoSQL Injection Attack 
+
+queries in fields disguised as normal info 
+
+input sanitization -> query -> identify remove 
+
+
+2. Cross Site Scripting -> js code 
+
+npm i xss 
+
+
+
+3. DDoS -> distributed Denial of Service 
+
+overwhelm 
+
+-> Rate Limiting -> from a certain IP we will limit the amount of requests we will allow so that any hacker cannot overwhelm our server from a single source 
+
+IP-> server (IP, count)
+
+
+
+
+
+4. Unknown Problem / Issues 
+
+logging 
