@@ -1,0 +1,9 @@
+{
+           "name":"Apple iphone 17 pro",
+           "description":"Now available in bhagwa color as well",
+           "sellerId":"68daade859da8fc0eddf37d0",
+           "costprice":100,
+           "saleprice":10000,
+           "Category":"Electronics",
+           "Stock":100
+        }
