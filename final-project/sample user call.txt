@@ -1,0 +1,11 @@
+{
+            "address": "123, NYC",
+            "name": "alice_smith89fo",
+            "email": "raja.gujjar@example.com",
+            "password": "MyNameisABCD",
+            "newPassword":"MyNameisFGHI",
+
+            "role": "admin",
+            "contact": 9123456783,
+            "age": 32
+        }

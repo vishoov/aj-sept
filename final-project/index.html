@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Server</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f3f4f6, #e3e6f3);
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 3rem;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+            display: inline-block;
+        }
+
+        h3 {
+            color: #555;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        ul li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        section {
+            margin: 30px auto;
+            max-width: 800px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #45a049;
+        }
+
+        .animated {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container animated">
+        <h1>Ecommerce Server Design</h1>
+        
+        <section>
+            <h2>Components</h2>
+            <ul>
+                <li><strong>Express:</strong> Routing and security</li>
+                <li><strong>MongoDB:</strong> Database</li>
+                <li><strong>Mongoose:</strong> Data validation</li>
+                <li><strong>Bcrypt:</strong> Password encryption</li>
+                <li><strong>JWT:</strong> Authentication</li>
+                <li><strong>Nodemailer:</strong> Confirming orders, tracking links</li>
+                <li><strong>Nodemon:</strong> Development environment</li>
+                <li><strong>Dotenv:</strong> Securing API keys</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Tech Stack</h2>
+            <p><strong>NodeJS, Express, MongoDB, Mongoose, JWT, Bcrypt</strong></p>
+        </section>
+
+        <section>
+            <h2>API Design</h2>
+            <h3>User Authentication</h3>
+            <ul>
+                <li>Signup</li>
+                <li>Login</li>
+                <li>Logout</li>
+                <li>Update Password</li>
+                <li>Profile Page through ID</li>
+            </ul>
+            <h3>Products</h3>
+            <ul>
+                <li>Create Product (/createproduct)</li>
+                <li>Fetch Product (/product)</li>
+                <li>Update Product (/updateProduct)</li>
+                <li>Delete Product (/deleteProduct)</li>
+                <li>Search (/searchProduct)</li>
+            </ul>
+            <h3>Cart Service</h3>
+            <ul>
+                <li>Add to Cart</li>
+                <li>Delete from Cart</li>
+                <li>Fetch Cart</li>
+            </ul>
+            <h3>Orders</h3>
+            <ul>
+                <li>Place Order</li>
+                <li>Cancel Order</li>
+                <li>Track</li>
+            </ul>
+            <h3>Reviews</h3>
+            <ul>
+                <li>Create Review</li>
+                <li>Fetch Reviews on a Product</li>
+                <li>Delete a Review</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Schemas</h2>
+            <h3>Product</h3>
+            <pre>
+    id: string,
+    Name: string,
+    Description: string,
+    CostPrice: number,
+    SalePrice: number,
+    Category: string,
+    Stock: number,
+    Image: [String], // CDN links for frontend
+    CreatedAt: date
+            </pre>
+            <h3>User</h3>
+            <pre>
+    Id: string,
+    Name: string,
+    Age: number,
+    Email: string,
+    Address: string,
+    Contact: number,
+    Role: "user" | "admin", // Role-based authentication
+    Password: string
+            </pre>
+            <h3>Cart</h3>
+            <pre>
+    Id: string,
+    UserID: string,
+    Products: [{
+        ProductId: string,
+        Price: number,
+        Quantity: number
+    }],
+    TotalAmount: number
+            </pre>
+            <h3>Order</h3>
+            <pre>
+    Id: string,
+    UserID: string,
+    Items: [{
+        ProductID: string,
+        Quantity: number,
+        Price: number
+    }],
+    TotalAmount: number,
+    ShippingAddress: string,
+    Status: string
+            </pre>
+            <h3>Reviews</h3>
+            <pre>
+    Id: string,
+    ProductId: string,
+    Rating: number,
+    UserId: string,
+    Title: string,
+    Description: string,
+    VerifiedPurchase: boolean,
+    Votes: number,
+    Media: [string]
+            </pre>
+        </section>
+    </div>
+</body>
+</html>
