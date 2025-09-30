@@ -1,0 +1,23 @@
+nodejs
+nodemon
+express
+routing
+reqres
+handler function
+dynamic routing -> route parameters, query parameters
+middlewares
+database
+modelling
+security 
+jwt 
+bcrypt
+rate limiting
+encryption
+server security
+cross site scripting
+multer
+web sockets
+mvc -> modular architecture 
+restful api 
+mongo database
+input sanitization
